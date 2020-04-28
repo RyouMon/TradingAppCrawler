@@ -6,4 +6,4 @@
 
 原型基于mitmdump+uiautomator2实现，只支持Android设备。
 
-后续的开发计划基于mitmdump+uiautomator实现，同时支持Android设备、IOS设备和模拟器。
+后续的开发进行重构，同时支持Android设备、IOS设备和模拟器。
