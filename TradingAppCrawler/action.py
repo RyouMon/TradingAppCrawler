@@ -3,6 +3,9 @@
 
 
 class Action:
+    """
+    完成对设备的基本操作
+    """
     def __init__(self, device):
         self.device = device
 
