@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 
-class Action:
+class Actor:
     """
-    Base Action.
+    Base Actor.
     """
     def __init__(self, device):
         self.device = device
@@ -25,9 +25,9 @@ class Action:
         pass
 
 
-class AndroidAction(Action):
+class AndroidActor(Actor):
     """
-    Base actions for Android
+    An actor for Android, interactive with Android device
     """
     def click_by_resource_id(self, resource_id):
         """
@@ -58,10 +58,10 @@ class AndroidAction(Action):
         self.device(scrollable=True).scroll.toEnd()
 
 
-def create_action(device):
+def create_actor(device):
     """
-    return an action object for device.
+    return an actor object for device.
     :param device: Android or IOS device
-    :return: AndroidAction or IOSAction
+    :return: AndroidActor or IOSActor
     """
-    return AndroidAction(device)
+    return AndroidActor(device)
