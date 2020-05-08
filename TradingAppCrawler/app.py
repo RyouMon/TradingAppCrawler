@@ -7,6 +7,7 @@ import types
 
 
 du = types.SimpleNamespace(
+    package_name='com.shizhuang.duapp',
     user_btn='com.shizhuang.duapp:id/rbtn_user',
     seller_center='com.shizhuang.duapp:id/sellerInfoUp',
     trade_success_num='com.shizhuang.duapp:id/tvTradeSuccessNum',
