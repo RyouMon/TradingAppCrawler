@@ -3,18 +3,14 @@
 import uiautomator2
 
 
-class Connector:
+def connect(addr, platform='android'):
     """
-    负责连接不同的设备
+    connect device, return Device object.
+    :param addr: address for device
+    :param platform: device platform, 'android' or 'ios'
+    :return: Device
     """
-    def __init__(self, platform, address):
-        self.platform = platform
-        self.address = address
-
-    def connect(self):
-        """
-        开始连接，返回连接的设备对象
-        :return: Device
-        """
-        if self.platform == 'android':
-            return uiautomator2.connect(self.address)
+    if platform == 'android':
+        return uiautomator2.connect(addr=addr)
+    elif platform == 'ios':
+        pass
