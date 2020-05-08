@@ -25,6 +25,8 @@ class Order(Base):
     income = Column(Float)
     express_no = Column(String)
     status = Column(Integer, ForeignKey('status.id'))
+    remarks = Column(String)
+    cost = Column(Float)
 
     def as_dict(self):
         return dict(
@@ -66,6 +68,8 @@ class Size(Base):
     title = Column(String, UniqueConstraint())
 
 
-engine = create_engine('sqlite:///.test.db', echo=True)
-#Base.metadata.drop_all(engine)
-Base.metadata.create_all(engine)
+if __name__ == '__main__':
+    from sqlalchemy import create_engine
+    engine = create_engine('sqlite:///.test.db', echo=True)
+    Base.metadata.drop_all(engine)
+    Base.metadata.create_all(engine)
