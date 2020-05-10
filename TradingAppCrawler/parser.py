@@ -82,6 +82,10 @@ class Parser(metaclass=ABCMeta):
         pass
 
     @abstractmethod
+    def get_identify_no(self):
+        pass
+
+    @abstractmethod
     def get_size_name(self):
         pass
 
@@ -154,6 +158,9 @@ class DuParser(Parser):
 
     def get_product_name(self):
         return self.target['skuInfo']['skuTitle']
+
+    def get_identify_no(self):
+        return self.target['skuInfo']['articleNumber']
 
     def get_size_name(self):
         return self.target['skuInfo']['skuProp']
