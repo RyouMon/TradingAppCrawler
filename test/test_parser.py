@@ -14,6 +14,7 @@ class DuParserTest(unittest.TestCase):
         self.assertEqual('2020-05-02 22:48:46', self.parser.get_create_time())
         self.assertEqual('212005022249072224212359', self.parser.get_trade_id())
         self.assertEqual('Supreme FW19 Week 1 Shoulder Bag 单肩包斜挎包 黑色', self.parser.get_product_name())
+        self.assertEqual('SUP-FW19-058', self.parser.get_identify_no())
         self.assertEqual('SF1021985167016', self.parser.get_express_no())
         self.assertEqual('交易成功', self.parser.get_status_name())
         self.assertEqual('均码', self.parser.get_size_name())
