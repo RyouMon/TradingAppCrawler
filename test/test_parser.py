@@ -6,7 +6,7 @@ from TradingAppCrawler.parser import Parser, DuParser
 
 class DuParserTest(unittest.TestCase):
     def setUp(self):
-        with open('example/success_tarding_detail.json', encoding='utf-8') as f:
+        with open('example/success_trading_detail.json', encoding='utf-8') as f:
             self.parser = DuParser(f.read())
 
     def test_should_return_str(self):
