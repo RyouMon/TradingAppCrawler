@@ -1,41 +1,27 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from abc import ABCMeta, abstractmethod, ABC
+from time import sleep
 
 
-class Actor(metaclass=ABCMeta):
+class Actor:
     """
-    An abstract class for actor.
-    Perform basic operations on the device.
+    An actor for Android, interactive with Android device
     """
     def __init__(self, device):
         self.device = device
 
-    @abstractmethod
     def back(self):
-        pass
+        """
+        press back button.
+        """
+        self.device.press('back')
 
-    @abstractmethod
-    def click_by_resource_id(self, resource_id):
-        pass
+    def wait_text(self, text, timeout=1):
+        self.device(text=text).wait(timeout=timeout)
 
-    @abstractmethod
-    def scroll_to_end(self):
-        pass
+    def wait_text_gone(self, text, timeout=1):
+        self.device(text=text).wait_gone(timeout=timeout)
 
-    @abstractmethod
-    def scroll_to_top(self):
-        pass
-
-    @abstractmethod
-    def open_app(self, package_name):
-        pass
-
-
-class AndroidActor(Actor, ABC):
-    """
-    An actor for Android, interactive with Android device
-    """
     def click_by_resource_id(self, resource_id):
         """
         click an UI object by resource id.
@@ -43,11 +29,8 @@ class AndroidActor(Actor, ABC):
         """
         self.device(resourceId=resource_id).click()
 
-    def back(self):
-        """
-        press back button.
-        """
-        self.device.press('back')
+    def click_by_text(self, text, instance: int):
+        self.device(text=text, instance=instance)
 
     def open_app(self, package_name, **kwargs):
         """
@@ -57,6 +40,12 @@ class AndroidActor(Actor, ABC):
         :return:
         """
         self.device.session(package_name, **kwargs)
+
+    def fling_to_end(self, *args, **kwargs):
+        self.device(scrollable=True).fling.toEnd(*args, **kwargs)
+
+    def fling_to_beginning(self, *args, **kwargs):
+        self.device(scrollable=True).fling.toBeginning(*args, **kwargs)
 
     def scroll_to_end(self):
         """
@@ -70,15 +59,5 @@ class AndroidActor(Actor, ABC):
         """
         self.device(scrollable=True).scroll.toBeginning()
 
-
-def create_actor(device):
-    """
-    return an actor object for device.
-    :param device: Android or IOS device
-    :return: AndroidActor or IOSActor
-    """
-    return AndroidActor(device)
-
-
-if __name__ == '__main__':
-    a = AndroidActor(None)
+    def get_text_by_resource_id(self, resource_id, timeout=2):
+        self.device(resourceId=resource_id).get_text(timeout=timeout)
