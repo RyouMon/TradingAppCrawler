@@ -35,6 +35,9 @@ class Actor:
         """
         return self.device(text=text).wait_gone(timeout=timeout)
 
+    def wait_ui_gone_by_resource_id(self, resource_id, timeout=1):
+        return self.device(resourceId=resource_id).wait_gone(timeout=timeout)
+
     def click_by_resource_id(self, resource_id, instance=None):
         """
         click an UI object by resource id.
@@ -80,7 +83,7 @@ class Actor:
         :param kwargs:
         :return: boolean
         """
-        return self.device(scrollable=True).fling.toEnd(*args, **kwargs)
+        self.device(scrollable=True).fling.toEnd(*args, **kwargs)
 
     def fling_to_beginning(self, *args, **kwargs):
         """
@@ -98,7 +101,7 @@ class Actor:
         """
         return self.device(scrollable=True).scroll.toEnd()
 
-    def scroll_to_top(self):
+    def scroll_to_beginning(self):
         """
         if current screen exist scrollable UI, scroll it to top.
         :return boolean
