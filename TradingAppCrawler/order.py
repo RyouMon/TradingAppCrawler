@@ -14,17 +14,17 @@ class Order(Base):
     create_time = Column(DateTime)
     order_id = Column(Integer, primary_key=True)
     trade_id = Column(String)
-    product = Column(Integer, ForeignKey('product.id'))
+    product_id = Column(Integer, ForeignKey('product.id'))
     quantity = Column(Integer)
-    size = Column(Integer, ForeignKey('size.id'))
+    size_id = Column(Integer, ForeignKey('size.id'))
     price = Column(Float)
     technical_fee = Column(Float)
     transfer_fee = Column(Float)
     inspection_fee = Column(Float)
     identification_fee = Column(Float)
+    packing_service_fee = Column(Float)
     income = Column(Float)
-    express_no = Column(String)
-    status = Column(Integer, ForeignKey('status.id'))
+    status_id = Column(Integer, ForeignKey('status.id'))
     remarks = Column(String)
     cost = Column(Float)
 
@@ -33,17 +33,19 @@ class Order(Base):
             create_time=self.create_time,
             order_id=self.order_id,
             trade_id=self.trade_id,
-            product=self.product,
+            product=self.product.title,
             quantity=self.quantity,
-            size=self.size,
+            size=self.size.name,
             price=self.price,
             technical_fee=self.technical_fee,
             transfer_fee=self.transfer_fee,
             inspection_fee=self.inspection_fee,
             identification_fee=self.identification_fee,
+            packing_service_fee=self.packing_service_fee,
             income=self.income,
-            express_no=self.express_no,
-            status=self.status,
+            status=self.status.name,
+            remarks=self.remarks,
+            cost=self.cost
         )
 
 
@@ -51,21 +53,21 @@ class Status(Base):
     __tablename__ = 'status'
     id = Column(Integer, primary_key=True)
     name = Column(String, UniqueConstraint())
-    order = relationship('Order', backref='status')
+    orders = relationship('Order', backref='status')
 
 
 class Product(Base):
     __tablename__ = 'product'
     id = Column(Integer, primary_key=True)
-    title = Column(String)
-    identify_no = Column(String)
-    order = relationship('Order', backref='product')
+    title = Column(String, UniqueConstraint())
+    orders = relationship('Order', backref='product')
 
 
 class Size(Base):
     __tablename__ = 'size'
     id = Column(Integer, primary_key=True)
-    title = Column(String, UniqueConstraint())
+    name = Column(String, UniqueConstraint())
+    orders = relationship('Order', backref='size')
 
 
 if __name__ == '__main__':
