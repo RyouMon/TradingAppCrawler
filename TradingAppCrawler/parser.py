@@ -5,162 +5,257 @@ from datetime import datetime
 from abc import ABCMeta, abstractmethod
 
 
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+
+
 class Parser(metaclass=ABCMeta):
-    def __init__(self, target=None):
+    """
+    Provide Table construction parameters for Access class
+    """
+    def ___init__(self, target=None):
         self.target = target
 
     @property
-    def target(self):
-        return self.target
+    @abstractmethod
+    def order(self):
+        pass
 
-    @target.setter
-    def target(self, value):
+    @property
+    @abstractmethod
+    def size(self):
+        pass
+
+    @property
+    @abstractmethod
+    def product(self):
+        pass
+
+    @property
+    @abstractmethod
+    def status(self):
         pass
 
     @abstractmethod
-    def get_create_time(self):
+    def _get_create_time(self):
         pass
 
     @abstractmethod
-    def get_order_id(self):
+    def _get_order_id(self):
         pass
 
     @abstractmethod
-    def get_trade_id(self):
+    def _get_trade_id(self):
         pass
 
     @abstractmethod
-    def get_quantity(self):
+    def _get_quantity(self):
         pass
 
     @abstractmethod
-    def get_price(self):
+    def _get_price(self):
         pass
 
     @abstractmethod
-    def get_technical_fee(self):
+    def _get_technical_fee(self):
         pass
 
     @abstractmethod
-    def get_transfer_fee(self):
+    def _get_transfer_fee(self):
         pass
 
     @abstractmethod
-    def get_inspection_fee(self):
+    def _get_inspection_fee(self):
         pass
 
     @abstractmethod
-    def get_identification_fee(self):
+    def _get_identification_fee(self):
         pass
 
     @abstractmethod
-    def get_packing_service_fee(self):
+    def _get_packing_service_fee(self):
         pass
 
     @abstractmethod
-    def get_income(self):
+    def _get_income(self):
         pass
 
     @abstractmethod
-    def get_express_no(self):
+    def _get_remarks(self):
         pass
 
     @abstractmethod
-    def get_remarks(self):
+    def _get_cost(self):
         pass
 
     @abstractmethod
-    def get_cost(self):
+    def _get_status_name(self):
         pass
 
     @abstractmethod
-    def get_status_name(self):
+    def _get_product_name(self):
         pass
 
     @abstractmethod
-    def get_product_name(self):
-        pass
-
-    @abstractmethod
-    def get_identify_no(self):
-        pass
-
-    @abstractmethod
-    def get_size_name(self):
+    def _get_size_name(self):
         pass
 
 
 class DuParser(Parser):
     @property
-    def target(self):
-        return self._target
+    def data(self):
+        return self._data
 
-    @target.setter
-    def target(self, value):
-        if value:
-            self._target = json.loads(value).get('data')
-        else:
-            self._target = None
+    @data.setter
+    def data(self, value):
+        self._data = value
 
-    def get_create_time(self):
-        datetime_str = self.target['extraInfoList'][1]['desc']
-        return datetime_str
+    @property
+    def order(self):
+        return dict(
+            create_time=self._get_create_time(),
+            order_id=self._get_order_id(),
+            trade_id=self._get_trade_id(),
+            quantity=self._get_quantity(),
+            price=self._get_price(),
+            technical_fee=self._get_technical_fee(),
+            transfer_fee=self._get_transfer_fee(),
+            inspection_fee=self._get_inspection_fee(),
+            identification_fee=self._get_identification_fee(),
+            packing_service_fee=self._get_packing_service_fee(),
+            income=self._get_income(),
+            remarks=self._get_remarks(),
+            cost=self._get_cost()
+        )
 
-    def get_order_id(self):
-        return self.target['extraInfoList'][0]['desc']
+    @property
+    def size(self):
+        return dict(
+            name=self._get_size_name()
+        )
 
-    def get_trade_id(self):
-        return self.target['extraInfoList'][2]['desc']
+    @property
+    def product(self):
+        return dict(
+            title=self._get_product_name()
+        )
 
-    def get_quantity(self):
+    @property
+    def status(self):
+        return dict(
+            name=self._get_status_name()
+        )
+
+    def _get_create_time(self):
+        """
+        return create time
+        :return: datetime
+        """
+        return datetime.strptime(self._data['create_time'], DATETIME_FORMAT)
+
+    def _get_order_id(self):
+        """
+        return order id
+        :return: int
+        """
+        return int(self._data['order_id'])
+
+    def _get_trade_id(self):
+        """
+        return trade id
+        :return: string
+        """
+        return self._data['trade_id']
+
+    def _get_quantity(self):
+        """
+        return quantity
+        :return: int
+        """
         return 1
 
-    def get_price(self):
-        return self.target['skuInfo']['skuPrice']/100
+    def _get_price(self):
+        """
+        return price
+        :return: float
+        """
+        return float(self._data['price'])
 
-    def get_technical_fee(self):
-        return self.target['feeInfo']['feeList'][0]['actualFee']/100
+    def _get_technical_fee(self):
+        """
+        return technical fee
+        :return: float
+        """
+        return float(self._data['technical_fee'])
 
-    def get_transfer_fee(self):
-        return self.target['feeInfo']['feeList'][1]['actualFee']/100
+    def _get_transfer_fee(self):
+        """
+        return transfer fee
+        :return: float
+        """
+        return float(self._data['transfer_fee'])
 
-    def get_inspection_fee(self):
-        return self.target['feeInfo']['feeList'][2]['actualFee']/100
+    def _get_inspection_fee(self):
+        """
+        return inspection fee
+        :return: float
+        """
+        return float(self._data['inspection_fee'])
 
-    def get_identification_fee(self):
-        return self.target['feeInfo']['feeList'][3]['actualFee']/100
+    def _get_identification_fee(self):
+        """
+        return identification fee
+        :return: float
+        """
+        return float(self._data['identification_fee'])
 
-    def get_packing_service_fee(self):
-        return self.target['feeInfo']['feeList'][4]['actualFee']/100
+    def _get_packing_service_fee(self):
+        """
+        return packing service fee
+        :return: float
+        """
+        return float(self._data['packing_service_fee'])
 
-    def get_income(self):
-        return self.target['feeInfo']['amountSum']/100
+    def _get_income(self):
+        """
+        return income
+        :return: float
+        """
+        return float(self._data['income'])
 
-    def get_express_no(self):
-        return self.target['trackInfo']['expressNo']
+    def _get_remarks(self):
+        """
+        return remarks
+        :return: string
+        """
+        return self._data['remarks']
 
-    def get_remarks(self):
-        self.remarks = self.target['remark']
-        return self.remarks
+    def _get_cost(self):
+        """
+        return cost
+        :return: float
+        """
+        try:
+            return float(self._data['cost'].split('_')[-1])
+        except Exception:
+            return 0.0
 
-    def get_cost(self):
-        if self.remarks:
-            try:
-                cost = eval(self.remarks)
-            except SyntaxError:
-                cost = None
-            return cost
-        else:
-            return None
+    def _get_status_name(self):
+        """
+        return status name
+        :return: string
+        """
+        return self._data['status']
 
-    def get_status_name(self):
-        return self.target['statusInfo']['statusDesc']
+    def _get_product_name(self):
+        """
+        return product name
+        :return: string
+        """
+        return self._data['product']
 
-    def get_product_name(self):
-        return self.target['skuInfo']['skuTitle']
-
-    def get_identify_no(self):
-        return self.target['skuInfo']['articleNumber']
-
-    def get_size_name(self):
-        return self.target['skuInfo']['skuProp']
+    def _get_size_name(self):
+        """
+        return size name
+        :return: string
+        """
+        return self._data['size']
