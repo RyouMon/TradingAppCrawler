@@ -84,10 +84,6 @@ class Parser(metaclass=ABCMeta):
         pass
 
     @abstractmethod
-    def _get_cost(self):
-        pass
-
-    @abstractmethod
     def _get_status_name(self):
         pass
 
@@ -124,7 +120,6 @@ class DuParser(Parser):
             packing_service_fee=self._get_packing_service_fee(),
             income=self._get_income(),
             remarks=self._get_remarks(),
-            cost=self._get_cost()
         )
 
     @property
@@ -228,16 +223,6 @@ class DuParser(Parser):
         :return: string
         """
         return self._data['remarks']
-
-    def _get_cost(self):
-        """
-        return cost
-        :return: float
-        """
-        try:
-            return float(self._data['cost'].split('_')[-1])
-        except Exception:
-            return 0.0
 
     def _get_status_name(self):
         """
