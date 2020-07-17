@@ -3,8 +3,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm.exc import NoResultFound
-from .order import *
-from .parser import *
+from TradingAppCrawler.order import *
+from TradingAppCrawler.parser import *
 
 
 class Access:
@@ -47,9 +47,6 @@ class Access:
             self.session.rollback()
         else:
             self.session.commit()
-
-    def get_all(self):
-        pass
 
     def _create_order(self, product, size, status):
         """
@@ -116,3 +113,6 @@ class Access:
         """
         for order in self.session.query(Order):
             yield order
+
+    def count(self):
+        return self.session.query(Order).count()
