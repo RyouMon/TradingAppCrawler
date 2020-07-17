@@ -26,7 +26,6 @@ class Order(Base):
     income = Column(Float)
     status_id = Column(Integer, ForeignKey('status.id'))
     remarks = Column(String)
-    cost = Column(Float)
 
     def as_dict(self):
         return dict(
@@ -45,7 +44,6 @@ class Order(Base):
             income=self.income,
             status=self.status.name,
             remarks=self.remarks,
-            cost=self.cost
         )
 
 
