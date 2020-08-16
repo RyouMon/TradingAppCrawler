@@ -27,7 +27,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/rbtn_user'
+            'resourceId': 'com.shizhuang.duapp:id/rbtn_user'
         }
 
     @property
@@ -37,7 +37,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/sellerInfoUp'
+            'resourceId': 'com.shizhuang.duapp:id/sellerInfoUp'
         }
 
     @property
@@ -47,7 +47,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvTradeSuccessNum'
+            'resourceId': 'com.shizhuang.duapp:id/tvTradeSuccessNum'
         }
 
     @property
@@ -57,7 +57,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvTradeFailedNum'
+            'resourceId': 'com.shizhuang.duapp:id/tvTradeFailedNum'
         }
 
     @property
@@ -67,7 +67,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tv_product_name'
+            'resourceId': 'com.shizhuang.duapp:id/tv_product_name'
         }
 
     @property
@@ -77,7 +77,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tv_price'
+            'resourceId': 'com.shizhuang.duapp:id/tv_price'
         }
 
     @property
@@ -87,7 +87,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvSizeAndNum'
+            'resourceId': 'com.shizhuang.duapp:id/tvSizeAndNum'
         }
 
     @property
@@ -97,7 +97,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvSum'
+            'resourceId': 'com.shizhuang.duapp:id/tvSum'
         }
 
     @property
@@ -111,21 +111,21 @@ class DuApp:
     def order_desc_value_in_order_detail(self, kw):
         """
         get order description in order detail.
-        :param kw: support following resource_id: order_id, trade_id, create_time
+        :param kw: support following resourceId: order_id, trade_id, create_time
         :return: dict, int
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvOrderDesc',
+            'resourceId': 'com.shizhuang.duapp:id/tvOrderDesc',
         }, self._order_desc_index[kw]
 
     def order_desc_title_in_order_detail(self, kw):
         """
         get order description in order detail.
-        :param kw: support following resource_id: order_id, trade_id, create_time
+        :param kw: support following resourceId: order_id, trade_id, create_time
         :return: dict, int
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvOrderTitle',
+            'resourceId': 'com.shizhuang.duapp:id/tvOrderTitle',
         }, self._order_desc_index[kw]
 
     @property
@@ -153,23 +153,23 @@ class DuApp:
     def fee_value_in_order_detail(self, kw):
         """
         get fee information in order detail.
-        :param kw: support following resource_id:
+        :param kw: support following resourceId:
                    technical_fee, transfer_fee, inspection_fee, identification_fee, packing_service_fee
         :return: dict, int
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvItemValue'
+            'resourceId': 'com.shizhuang.duapp:id/tvItemValue'
         }, self._fee_index[kw]
 
     def fee_title_in_order_detail(self, kw):
         """
         get fee name in order detail.
-        :param kw: support following resource_id:
+        :param kw: support following resourceId:
                    technical_fee, transfer_fee, inspection_fee, identification_fee, packing_service_fee
         :return: dict, int
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvItemTitle'
+            'resourceId': 'com.shizhuang.duapp:id/tvItemTitle'
         }, self._fee_index[kw]
 
     @property
@@ -179,7 +179,7 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tv_remark_content'
+            'resourceId': 'com.shizhuang.duapp:id/tv_remark_content'
         }
 
     @property
@@ -189,5 +189,5 @@ class DuApp:
         :return: dict
         """
         return {
-            'resource_id': 'com.shizhuang.duapp:id/tvLoadMore'
+            'resourceId': 'com.shizhuang.duapp:id/tvLoadMore'
         }
