@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 import json
-from TradingAppCrawler.parser import Parser, DuParser, DATETIME_FORMAT
+from TradingAppCrawler.parser import DuParser, DATETIME_FORMAT
 
 
 class DuParserTest(unittest.TestCase):
