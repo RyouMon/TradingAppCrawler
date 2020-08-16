@@ -5,7 +5,7 @@ from uiautomator2.exceptions import UiObjectNotFoundError
 
 class Actor:
     """
-    An actor for Android, interactive with Android device
+    An access layer for uiautomator2.
     """
     def __init__(self, device):
         self.device = device
@@ -17,64 +17,27 @@ class Actor:
         """
         return self.device.press('back')
 
-    def wait_text(self, text, timeout=1):
+    def click_by(self, method, properties, instance=None, *args, **kwargs):
         """
-        wait until text appear, return boolean.
-        :param text: str
-        :param timeout: int or float, default 1.
-        :return: boolean
-        """
-        return self.device(text=text).wait(timeout=timeout)
-
-    def wait_text_gone(self, text, timeout=1):
-        """
-        wait until text gone, return boolean.
-        :param text: str
-        :param timeout: int or float, default 1.
-        :return: boolean
-        """
-        return self.device(text=text).wait_gone(timeout=timeout)
-
-    def wait_ui_gone_by_resource_id(self, resource_id, timeout=1):
-        return self.device(resourceId=resource_id).wait_gone(timeout=timeout)
-
-    def click_by_resource_id(self, resource_id, instance=None):
-        """
-        click an UI object by resource id.
-        :param resource_id: resource id
-        :param instance: int
-        :return: boolean
-        """
-        return self.device(resourceId=resource_id, instance=instance).click()
-
-    def click_by_text(self, text, instance=0):
-        """
-        click an UI object by text
-        :param text: str
+        click an UI object by properties
+        :param method:
+        :param properties: dict of ui properties
         :param instance: int, default 0.
         :return: boolean
         """
-        return self.device(text=text, instance=instance).click()
+        return eval(f"self.device({method}={properties}['{method}'], instance={instance}, *{args}, **{kwargs}).click()")
 
-    def drag_ui_to_ui_by_text(self, text1, instance, text2, duration=0.5):
+    def drag_ui_to_ui_by(self, method, properties1, properties2, from_instance, duration=0.5):
         """
         drag an UI to another UI in duration second.
-        :param text1: text in UI 1
-        :param instance: int
-        :param text2: text in UI 2
+        :param method: 
+        :param properties1: properties of first ui.
+        :param properties2: properties of second ui.
+        :param from_instance: int, nth kw of UI 1.
         :param duration: int or float, default 0.5
         :return: boolean
         """
-        return self.device(text=text1, instance=instance).drag_to(text=text2, duration=duration)
-
-    def open_app(self, package_name, **kwargs):
-        """
-        open application by package name.
-        :param package_name: package name
-        :param kwargs:
-        :return: boolean
-        """
-        return self.device.session(package_name, **kwargs)
+        return eval(f'self.device({method}={properties1}["{method}"], instance={from_instance}).drag_to({method}={properties2}["{method}"], duration={duration})')
 
     def fling_to_end(self, *args, **kwargs):
         """
@@ -94,29 +57,48 @@ class Actor:
         """
         return self.device(scrollable=True).fling.toBeginning(*args, **kwargs)
 
-    def scroll_to_end(self):
-        """
-        if current screen exist scrollable UI, scroll it to end.
-        :return boolean
-        """
-        return self.device(scrollable=True).scroll.toEnd()
+    def get_ui_by(self, method, properties, instance=None):
+        return eval(f"self.device({method}={properties}['{method}'], instance={instance})")
 
-    def scroll_to_beginning(self):
+    def get_text_by(self, method, properties, instance=None, timeout=0.5):
         """
-        if current screen exist scrollable UI, scroll it to top.
-        :return boolean
-        """
-        return self.device(scrollable=True).scroll.toBeginning()
-
-    def get_text_by_resource_id(self, resource_id, instance=None, timeout=0.5):
-        """
-        get text of nth UI instance by resource id.
-        :param resource_id: resource id
+        get properties of nth UI kw by resource id.
+        :param method:
+        :param properties: dict of ui properties
         :param instance: int
         :param timeout: int or float, default 0.5.
         :return: if UI object is found, return str, else return "".
         """
         try:
-            return self.device(resourceId=resource_id, instance=instance).get_text(timeout=timeout)
+            return eval(f"self.device({method}={properties}['{method}'], instance={instance}).get_text(timeout={timeout})")
         except UiObjectNotFoundError:
             return ""
+
+    def open_app(self, package_name, **kwargs):
+        """
+        open application by package name.
+        :param package_name: package name
+        :param kwargs:
+        :return: boolean
+        """
+        return self.device.session(package_name, **kwargs)
+
+    def scroll_to_end(self, *args, **kwargs):
+        """
+        if current screen exist scrollable UI, scroll it to end.
+        :return boolean
+        """
+        return self.device(scrollable=True).scroll.toEnd(*args, **kwargs)
+
+    def scroll_to_beginning(self, *args, **kwargs):
+        """
+        if current screen exist scrollable UI, scroll it to top.
+        :return boolean
+        """
+        return self.device(scrollable=True).scroll.toBeginning(*args, **kwargs)
+
+    def wait_ui_by(self, method, properties, instance=None, timeout=1):
+        return eval(f"self.device({method}={properties}['{method}'], instance={instance}).wait(timeout={timeout})")
+
+    def wait_ui_gone_by(self, method, properties, instance=None, timeout=1):
+        return eval(f"self.device({method}=properties['{method}'], instance={instance}).wait_gone(timeout={timeout})")
